@@ -163,3 +163,4 @@
 /Users/javiermartinez/Desktop/Proyectos/OnePieceBattler/OnePieceBattler/obj/Debug/net8.0/OnePieceBattler.pdb
 /Users/javiermartinez/Desktop/Proyectos/OnePieceBattler/OnePieceBattler/obj/Debug/net8.0/OnePieceBattler.genruntimeconfig.cache
 /Users/javiermartinez/Desktop/Proyectos/OnePieceBattler/OnePieceBattler/obj/Debug/net8.0/ref/OnePieceBattler.dll
+/Users/javiermartinez/Desktop/Proyectos/OnePieceBattler/OnePieceBattler/obj/Debug/net8.0/OnePieceBattler.sourcelink.json
