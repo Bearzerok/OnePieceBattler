@@ -1,0 +1,177 @@
+@model OnePieceBattler.Models.Battle
+@using Microsoft.Extensions.Logging
+
+
+@{
+    ViewData["Title"] = "Battle";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pirata+One&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Pirata One', cursive;
+            background-color: #f0f0f0;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .background-image {
+            background-image: url('/images/background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            opacity: 0.5;
+        }
+
+        .overlay {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: rgba(107, 208, 238, 0.2);
+            z-index: -1;
+        }
+
+        h1 {
+            font-family: 'Pirata One', cursive;
+            font-size: 48px;
+            color: white;
+            text-align: center;
+            margin-bottom: 40px;
+            text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+        }
+
+        .battle-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .character {
+            width: 300px;
+            height: 400px;
+            overflow: hidden;
+            background-color: rgba(255, 255, 255, 0.8);
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            align-items: center;
+            text-align: center;
+        }
+
+        .character:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: linear-gradient(to bottom right, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.5));
+            z-index: -1;
+            border-radius: 5px;
+        }
+
+        .character img {
+            width: 100%;
+            border-radius: 5px;
+        }
+
+        .character h2 {
+            font-family: 'Pirata One', cursive;
+            font-size: 24px;
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+
+        .character p {
+            font-family: 'Pirata One', cursive;
+            font-size: 16px;
+            color: #666;
+        }
+
+        .battle-button {
+            font-family: 'Pirata One', cursive;
+            font-size: 16px;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .battle-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="background-image"></div>
+    <div class="overlay"></div>
+    <h1>@ViewData["Title"]</h1>
+
+    <div class="battle-container">
+        <div class="character">
+            <h2>@Model.Player1.Name</h2>
+            <img src="@Model.Player1.ImagePath" alt="@Model.Player1.Name">
+            <p>@Model.Player1.Description</p>
+            <p>Health: @Model.Player1Health</p>
+        </div>
+
+        <div class="character">
+            <h2>@Model.Player2.Name</h2>
+            <img src="@Model.Player2.ImagePath" alt="@Model.Player2.Name">
+            <p>@Model.Player2.Description</p>
+            <p>Health: @Model.Player2Health</p>
+        </div>
+    </div>
+
+    @if (!Model.IsBattleOver)
+    {
+        @if (Model.Moves != null && Model.Moves.Any())
+        {
+            <div style="text-align: center; margin-top: 20px;">
+            <form id="executeMoveForm" action="@Url.Action("ExecuteMove", "Game")" method="post">
+                <input type="hidden" name="battleId" value="@Model.Id" />
+                <select name="moveId" id="moveIdSelect">
+                    @foreach (var move in Model.Moves)
+                        {
+                            <option value="@move.Id">@move.Name</option>
+                        }
+                </select>
+                <button type="submit" class="battle-button">Execute Move</button>
+            </form>
+        </div>
+        }
+        else
+        {
+            <p>No hay movimientos disponibles.</p>
+        }
+    }
+    else
+    {
+        <h2 style="text-align: center; margin-top: 20px;">Battle Over!</h2>
+    }
+</body>
+</html>
