@@ -2,86 +2,56 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OnePieceBattler.Data;
 using OnePieceBattler.Models;
-using System;
-using System.Linq;
 
 namespace OnePieceBattler.Controllers
 {
     public class GameController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly CharacterRepository _characterRepository;
+        private readonly BattleRepository _battleRepository;
+        private readonly MoveRepository _moveRepository;
 
         public GameController(ApplicationDbContext context)
         {
             _context = context;
+            _characterRepository = new CharacterRepository(_context);
+            _battleRepository = new BattleRepository(_context, _characterRepository);
+            _moveRepository = new MoveRepository(_context);
         }
 
         public IActionResult Index()
         {
-            var characters = _context.Characters.ToList();
+            var characters = _characterRepository.GetCharactersByIds();
             return View(characters);
         }
 
         public IActionResult Battle(int player1Id)
         {
-            var player1 = _context.Characters.Find(player1Id);
-            if (player1 == null)
-            {
-                return NotFound();
-            }
-
-            var battle = _context.Battles
-                .Include(b => b.Player1)
-                .Include(b => b.Player2)
-                .FirstOrDefault(b => b.Player1.Id == player1Id || b.Player2.Id == player1Id);
-            Console.WriteLine(battle.Id);
+            var battle = _battleRepository.GetBattleByCharacters(player1Id);
 
             if (battle == null)
             {
-                var charactersExceptPlayer1 = _context.Characters.Where(c => c.Id != player1Id).ToList();
-                var randomIndex = new Random().Next(charactersExceptPlayer1.Count);
-                var player2 = charactersExceptPlayer1[randomIndex];
-
-                if (player2 == null)
-                {
-                    return NotFound();
-                }
-
-                // Obtener movimientos con IDs 1 y 2 desde la base de datos
-                var movesFirst = _context.Moves.Where(m => m.Id == 1 || m.Id == 2).ToList();
-                Console.WriteLine("NO DEBERÍA ENTRAR");
-
-
-                battle = new Battle
-                {
-                    Player1 = player1,
-                    Player2 = player2,
-                    Player1Health = player1.Health,
-                    Player2Health = player2.Health,
-                    IsPlayer1Turn = true,
-                };
-
-                _context.Battles.Add(battle);
-                _context.SaveChanges();
+                var moves = _moveRepository.GetMoves();
+                battle = _battleRepository.CreateRandomBattle(player1Id, moves);
+                _battleRepository.AddBattle(battle);
+            } else
+            {
+            var moves = _moveRepository.GetMoves();
+            battle.Moves = moves;
+            _battleRepository.UpdateBattle(battle);
             }
 
-            var moves = _context.Moves.Where(m => m.Id == 1 || m.Id == 2).ToList();
-
-            Console.WriteLine(battle.Id);
-            battle.Moves = moves;
+            Console.WriteLine("Returning battle with Id: " + battle.Id);
             return View(battle);
         }
 
         [HttpPost]
         public IActionResult ExecuteMove(int battleId, int moveId)
         {
-            Console.WriteLine("ENTRA EN EL EXECUTE");
-            var battle = _context.Battles
-                .Include(b => b.Player1)
-                .Include(b => b.Player2)
-                .FirstOrDefault(b => b.Id == battleId);
+            var battle = _battleRepository.GetBattleById(battleId);
 
-            var move = _context.Moves.Find(moveId);
+            var move = _moveRepository.GetMoveById(moveId);
 
             if (battle == null || move == null)
             {
@@ -90,60 +60,97 @@ namespace OnePieceBattler.Controllers
 
             if (battle.IsPlayer1Turn)
             {
+                battle.Player2Health = MoveDamage(battle, move);
+                battle.IsPlayer1Turn = !battle.IsPlayer1Turn;
+
+                if (battle.Player1Health <= 0)
+                {
+                    _battleRepository.DeleteBattle(battleId);
+                    Console.WriteLine("You lost the battle!, Game Over!");
+
+                    return RedirectToAction("Index");
+                }
+                else if (battle.Player2Health <= 0)
+                {
+                    EndBattle(battle);
+                    Console.WriteLine("You won the battle!, Heading to BattleOver page!");
+                    return RedirectToAction("BattleOver", new { player1Id = battle.Player1.Id });
+                }
+
+                
+
+                var randomMove = _moveRepository.GetMoveById(2);
+                if (randomMove != null)
+                {
+                    battle.Player1Health = MoveDamage(battle, randomMove);
+                    battle.IsPlayer1Turn = !battle.IsPlayer1Turn;
+
+                    if (battle.Player1Health <= 0)
+                    {
+                        _battleRepository.DeleteBattle(battleId); 
+                        Console.WriteLine("You lost the battle!, Game Over!");
+                        return RedirectToAction("Index");
+                     }
+                    else if (battle.Player2Health <= 0)
+                     {
+                        EndBattle(battle);
+                        Console.WriteLine("You won the battle!, Heading to BattleOver page!");
+                        return RedirectToAction("BattleOver", new { player1Id = battle.Player1.Id });
+                     }
+                }
+            } else
+            {
+                battle.IsPlayer1Turn = !battle.IsPlayer1Turn;
+
+                    var randomMove = _moveRepository.GetMoveById(2);
+                    if (randomMove != null)
+                    {
+                        battle.Player1Health = MoveDamage(battle, randomMove);
+
+                        if (battle.Player1Health <= 0)
+                        {
+                            _battleRepository.DeleteBattle(battleId);
+                            Console.WriteLine("You lost the battle!, Game Over!");
+                            return RedirectToAction("Index");
+                        }
+                        else if (battle.Player2Health <= 0)
+                        {
+                            EndBattle(battle);
+                            Console.WriteLine("You won the battle!, Heading to BattleOver page!");
+                            return RedirectToAction("BattleOver", new { player1Id = battle.Player1.Id});
+                        }
+                    }
+            }
+
+            _battleRepository.UpdateBattle(battle);
+            Console.WriteLine("Move executed!");
+            return RedirectToAction("Battle", new { player1Id = battle.Player1.Id });
+        }
+
+        private void EndBattle(Battle battle)
+        {
+            battle.Player2Health = 0;
+            battle.IsBattleOver = true;
+            var character = _characterRepository.GetCharacterById(battle.Player1.Id);
+                battle.Player1Health = character.Health;
+                battle.Player2Health = character.Health;
+            battle.IsBattleOver = false;
+            _battleRepository.UpdateBattle(battle);
+        }
+
+        private int MoveDamage(Battle battle, Move move)
+        {   
+            if (battle.IsPlayer1Turn)
+            {
                 battle.Player2Health -= move.MovePower;
+                return battle.Player2Health;
             }
             else
             {
                 battle.Player1Health -= move.MovePower;
-            }
-
-            if (battle.Player1Health <= 0)
-            {
-                battle.Player1Health = 0;
-                battle.IsBattleOver = true;
-                _context.Battles.Update(battle);
-                _context.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            else if (battle.Player2Health <= 0)
-            {
-                battle.Player2Health = 0;
-                battle.IsBattleOver = true;
-                _context.Battles.Update(battle);
-                _context.SaveChanges();
-                return RedirectToAction("BattleOver", new { player1Id = battle.Player1.Id });
-            }
-            else
-            {
-                battle.IsPlayer1Turn = !battle.IsPlayer1Turn;
-
-                if (!battle.IsPlayer1Turn)
-                {
-                    var randomMove = _context.Moves.FirstOrDefault(m => m.Id == 2);
-                    if (randomMove != null)
-                    {
-                        battle.Player1Health -= randomMove.MovePower;
-
-                        if (battle.Player1Health <= 0)
-                        {
-                            battle.Player1Health = 0;
-                            battle.IsBattleOver = true;
-                            _context.Battles.Update(battle);
-                            _context.SaveChanges();
-                            return RedirectToAction("Index");
-                        }
-                        else
-                        {
-                            battle.IsPlayer1Turn = !battle.IsPlayer1Turn;
-                        }
-                    }
-                }
-
-                _context.Battles.Update(battle);
-                _context.SaveChanges();
-
-                return RedirectToAction("Battle", new { player1Id = battle.Player1.Id });
+                return battle.Player1Health;
             }
         }
     }
 }
+

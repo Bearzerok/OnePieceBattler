@@ -1,7 +1,6 @@
 @model OnePieceBattler.Models.Battle
 @using Microsoft.Extensions.Logging
 
-
 @{
     ViewData["Title"] = "Battle";
 }
@@ -124,6 +123,12 @@
         .battle-button:hover {
             background-color: #0056b3;
         }
+
+        .player-turn {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 24px;
+        }
     </style>
 </head>
 <body>
@@ -149,24 +154,35 @@
 
     @if (!Model.IsBattleOver)
     {
+        <div class="player-turn">
+            @if (Model.IsPlayer1Turn)
+            {
+                <h3>Player 1's Turn</h3>
+            }
+            else
+            {
+                <h3>Player 2's Turn</h3>
+            }
+        </div>
+
         @if (Model.Moves != null && Model.Moves.Any())
         {
             <div style="text-align: center; margin-top: 20px;">
-            <form id="executeMoveForm" action="@Url.Action("ExecuteMove", "Game")" method="post">
-                <input type="hidden" name="battleId" value="@Model.Id" />
-                <select name="moveId" id="moveIdSelect">
-                    @foreach (var move in Model.Moves)
+                <form id="executeMoveForm" action="@Url.Action("ExecuteMove", "Game")" method="post">
+                    <input type="hidden" name="battleId" value="@Model.Id" />
+                    <select name="moveId" id="moveIdSelect">
+                        @foreach (var move in Model.Moves)
                         {
                             <option value="@move.Id">@move.Name</option>
                         }
-                </select>
-                <button type="submit" class="battle-button">Execute Move</button>
-            </form>
-        </div>
+                    </select>
+                    <button type="submit" class="battle-button">Execute Move</button>
+                </form>
+            </div>
         }
         else
         {
-            <p>No hay movimientos disponibles.</p>
+            <p>No moves available.</p>
         }
     }
     else
@@ -175,3 +191,4 @@
     }
 </body>
 </html>
+

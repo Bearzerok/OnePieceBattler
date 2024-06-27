@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("OnePieceBattler")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+be2f3c68a81e7d22d7f12ad4f66833e5dcdbd5ab")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+697148d512230df2faa15f856f017a0777a4e483")]
 [assembly: System.Reflection.AssemblyProductAttribute("OnePieceBattler")]
 [assembly: System.Reflection.AssemblyTitleAttribute("OnePieceBattler")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
