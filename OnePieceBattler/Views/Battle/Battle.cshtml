@@ -168,7 +168,7 @@
         @if (Model.Moves != null && Model.Moves.Any())
         {
             <div style="text-align: center; margin-top: 20px;">
-                <form id="executeMoveForm" action="@Url.Action("ExecuteMove", "Game")" method="post">
+                <form id="executeMoveForm" action="@Url.Action("ExecuteMove", "Battle")" method="post">
                     <input type="hidden" name="battleId" value="@Model.Id" />
                     <select name="moveId" id="moveIdSelect">
                         @foreach (var move in Model.Moves)

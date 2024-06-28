@@ -153,7 +153,7 @@
                     <h2>@character.Name</h2>
                     <p>@character.Description</p>
                     <!-- Enlace al botón "Battle" -->
-                    <a href="@Url.Action("Battle", "Game", new { player1Id = character.Id })" class="battle-button">Battle</a>
+                    <a href="@Url.Action("Battle", "Battle", new { player1Id = character.Id })" class="battle-button">Battle</a>
                 </div>
             </div>
         }

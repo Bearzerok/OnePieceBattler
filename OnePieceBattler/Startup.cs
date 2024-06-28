@@ -55,7 +55,7 @@ namespace OnePieceBattler
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Game}/{action=Index}/{id?}");
+                    pattern: "{controller=Index}/{action=Index}/{id?}");
             });
         }
     }

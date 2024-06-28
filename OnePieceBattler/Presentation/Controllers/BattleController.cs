@@ -5,27 +5,20 @@ using OnePieceBattler.Models;
 
 namespace OnePieceBattler.Controllers
 {
-    public class GameController : Controller
+    public class BattleController : Controller
     {
         private readonly ApplicationDbContext _context;
         private readonly CharacterRepository _characterRepository;
         private readonly BattleRepository _battleRepository;
         private readonly MoveRepository _moveRepository;
 
-        public GameController(ApplicationDbContext context)
+        public BattleController(ApplicationDbContext context)
         {
             _context = context;
             _characterRepository = new CharacterRepository(_context);
             _battleRepository = new BattleRepository(_context, _characterRepository);
             _moveRepository = new MoveRepository(_context);
         }
-
-        public IActionResult Index()
-        {
-            var characters = _characterRepository.GetCharactersByIds();
-            return View(characters);
-        }
-
         public IActionResult Battle(int player1Id)
         {
             var battle = _battleRepository.GetBattleByCharacters(player1Id);
@@ -74,7 +67,7 @@ namespace OnePieceBattler.Controllers
                 {
                     EndBattle(battle);
                     Console.WriteLine("You won the battle!, Heading to BattleOver page!");
-                    return RedirectToAction("BattleOver", new { player1Id = battle.Player1.Id });
+                    return RedirectToAction("Battle","BattleOver", new { player1Id = battle.Player1.Id });
                 }
 
                 
@@ -89,13 +82,13 @@ namespace OnePieceBattler.Controllers
                     {
                         _battleRepository.DeleteBattle(battleId); 
                         Console.WriteLine("You lost the battle!, Game Over!");
-                        return RedirectToAction("Index");
+                        return RedirectToAction("Index","Index");
                      }
                     else if (battle.Player2Health <= 0)
                      {
                         EndBattle(battle);
                         Console.WriteLine("You won the battle!, Heading to BattleOver page!");
-                        return RedirectToAction("BattleOver", new { player1Id = battle.Player1.Id });
+                        return RedirectToAction("Battle","BattleOver", new { player1Id = battle.Player1.Id });
                      }
                 }
             } else
@@ -111,20 +104,20 @@ namespace OnePieceBattler.Controllers
                         {
                             _battleRepository.DeleteBattle(battleId);
                             Console.WriteLine("You lost the battle!, Game Over!");
-                            return RedirectToAction("Index");
+                            return RedirectToAction("Index","Index");
                         }
                         else if (battle.Player2Health <= 0)
                         {
                             EndBattle(battle);
                             Console.WriteLine("You won the battle!, Heading to BattleOver page!");
-                            return RedirectToAction("BattleOver", new { player1Id = battle.Player1.Id});
+                            return RedirectToAction("Battle","BattleOver", new { player1Id = battle.Player1.Id});
                         }
                     }
             }
 
             _battleRepository.UpdateBattle(battle);
             Console.WriteLine("Move executed!");
-            return RedirectToAction("Battle", new { player1Id = battle.Player1.Id });
+            return RedirectToAction("Battle","Battle", new { player1Id = battle.Player1.Id });
         }
 
         private void EndBattle(Battle battle)
@@ -153,4 +146,3 @@ namespace OnePieceBattler.Controllers
         }
     }
 }
-

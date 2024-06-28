@@ -17,6 +17,7 @@ namespace OnePieceBattler.Data
 
         public Battle CreateRandomBattle(int player1Id,List<Move> moves)
         {
+            //TODO: PASAR ESTO A UN CASO DE USO
             var player1 = _characterRepository.GetCharacterById(player1Id);
             var player2 = _characterRepository.GetRandomCharacter(new int[] { player1Id });
 
