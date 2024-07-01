@@ -7,37 +7,10 @@ namespace OnePieceBattler.Data
     public class BattleRepository
     {
         private readonly ApplicationDbContext _context;
-        private readonly CharacterRepository _characterRepository;
 
-        public BattleRepository(ApplicationDbContext context, CharacterRepository characterRepository)
+        public BattleRepository(ApplicationDbContext context)
         {
             _context = context;
-            _characterRepository = characterRepository;
-        }
-
-        public Battle CreateRandomBattle(int player1Id,List<Move> moves)
-        {
-            //TODO: PASAR ESTO A UN CASO DE USO
-            var player1 = _characterRepository.GetCharacterById(player1Id);
-            var player2 = _characterRepository.GetRandomCharacter(new int[] { player1Id });
-
-
-            if (player1 == null || player2 == null)
-            {
-                throw new Exception("Player not found");
-            }
-
-            var battle = new Battle
-            {
-                    Player1 = player1,
-                    Player2 = player2,
-                    Player1Health = player1.Health,
-                    Player2Health = player2.Health,
-                    IsPlayer1Turn = true,
-                    Moves = moves
-            };
-
-            return battle;
         }
 
         public Battle?GetBattleByCharacters(int player1Id)
