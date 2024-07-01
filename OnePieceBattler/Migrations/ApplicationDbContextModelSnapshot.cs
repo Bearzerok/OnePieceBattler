@@ -377,6 +377,35 @@ namespace OnePieceBattler.Migrations
                             Name = "Marco",
                             ObservationHakiPower = 0,
                             Speed = 0
+                        },
+                        new
+                        {
+                            Id = 7,
+                            ArmamentHakiPower = 0,
+                            AttackPower = 20,
+                            BattleIq = 0,
+                            Bounty = 0,
+                            CharacterVersion = 0,
+                            ConquerorHakiPower = 0,
+                            CriticalAttackMultiplier = 0,
+                            DefensePower = 10,
+                            Description = "Monkey D. Luffy",
+                            DevilFruitType = 0,
+                            Experience = 0,
+                            ExperienceToNextLevel = 100,
+                            ExperienceToNextLevelBase = 100,
+                            Gold = 0f,
+                            Health = 500,
+                            ImagePath = "/images/characters/luffy_gear_5.png",
+                            IsDefeated = false,
+                            IsDefinitiveVersion = 0,
+                            IsMaxLevel = false,
+                            IsPlayable = false,
+                            Level = 1,
+                            Luck = 10,
+                            Name = "Luffy",
+                            ObservationHakiPower = 0,
+                            Speed = 10
                         });
                 });
 
@@ -471,7 +500,7 @@ namespace OnePieceBattler.Migrations
 
                     b.HasIndex("IslandId");
 
-                    b.ToTable("IslandIvents");
+                    b.ToTable("IslandEvents");
                 });
 
             modelBuilder.Entity("OnePieceBattler.Models.Item", b =>
@@ -583,6 +612,20 @@ namespace OnePieceBattler.Migrations
                     b.ToTable("Moves");
 
                     b.HasData(
+                        new
+                        {
+                            Id = 3,
+                            MoveAccuracy = 0,
+                            MoveCooldown = 0,
+                            MoveCriticalHitChance = 0,
+                            MoveLuck = 0,
+                            MovePower = 100,
+                            MovePriority = false,
+                            Name = "Kick",
+                            NumberOfHits = 0,
+                            NumberOfTargets = 0,
+                            SelfDamage = 0
+                        },
                         new
                         {
                             Id = 1,
@@ -740,7 +783,7 @@ namespace OnePieceBattler.Migrations
 
                     b.HasIndex("QuestId");
 
-                    b.ToTable("QuestLog");
+                    b.ToTable("QuestLogs");
                 });
 
             modelBuilder.Entity("OnePieceBattler.Models.QuestObjective", b =>

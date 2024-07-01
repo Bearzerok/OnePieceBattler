@@ -147,6 +147,7 @@
 /Users/javiermartinez/Desktop/Proyectos/OnePieceBattler/OnePieceBattler/obj/Debug/net8.0/OnePieceBattler.MvcApplicationPartsAssemblyInfo.cache
 /Users/javiermartinez/Desktop/Proyectos/OnePieceBattler/OnePieceBattler/obj/Debug/net8.0/OnePieceBattler.RazorAssemblyInfo.cache
 /Users/javiermartinez/Desktop/Proyectos/OnePieceBattler/OnePieceBattler/obj/Debug/net8.0/OnePieceBattler.RazorAssemblyInfo.cs
+/Users/javiermartinez/Desktop/Proyectos/OnePieceBattler/OnePieceBattler/obj/Debug/net8.0/OnePieceBattler.sourcelink.json
 /Users/javiermartinez/Desktop/Proyectos/OnePieceBattler/OnePieceBattler/obj/Debug/net8.0/staticwebassets.build.json
 /Users/javiermartinez/Desktop/Proyectos/OnePieceBattler/OnePieceBattler/obj/Debug/net8.0/staticwebassets.development.json
 /Users/javiermartinez/Desktop/Proyectos/OnePieceBattler/OnePieceBattler/obj/Debug/net8.0/staticwebassets/msbuild.OnePieceBattler.Microsoft.AspNetCore.StaticWebAssets.props
@@ -163,4 +164,3 @@
 /Users/javiermartinez/Desktop/Proyectos/OnePieceBattler/OnePieceBattler/obj/Debug/net8.0/OnePieceBattler.pdb
 /Users/javiermartinez/Desktop/Proyectos/OnePieceBattler/OnePieceBattler/obj/Debug/net8.0/OnePieceBattler.genruntimeconfig.cache
 /Users/javiermartinez/Desktop/Proyectos/OnePieceBattler/OnePieceBattler/obj/Debug/net8.0/ref/OnePieceBattler.dll
-/Users/javiermartinez/Desktop/Proyectos/OnePieceBattler/OnePieceBattler/obj/Debug/net8.0/OnePieceBattler.sourcelink.json

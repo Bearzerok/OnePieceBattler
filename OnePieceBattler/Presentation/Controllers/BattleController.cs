@@ -43,6 +43,7 @@ namespace OnePieceBattler.Controllers
             var result = _battleAction.Execute(battleId, moveId);
             if (result.IsRedirect)
             {
+                Console.WriteLine("Redirecting to " + result.ActionName + " " + result.ControllerName + " " + result.RouteValues);
                 return RedirectToAction(result.ActionName, result.ControllerName, result.RouteValues);
             } else{
                 throw new Exception("Could not redirect to the specified action after executing move!" + result.ActionName + " " + result.ControllerName + " " + result.RouteValues);

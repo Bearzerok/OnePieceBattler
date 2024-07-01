@@ -31,8 +31,7 @@ namespace OnePieceBattler.Application.UseCases.BattleUseCases
             battle.Moves = moves;
             _battleRepository.UpdateBattle(battle);
             }
-            Console.WriteLine("Returning battle with Id: " + battle.Id);
-
+            Console.WriteLine("Returning battle with Id: " + battle.Id + "for player1Id: " + player1Id);
             return battle;
         }
     }

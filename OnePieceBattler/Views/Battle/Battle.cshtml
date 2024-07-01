@@ -62,7 +62,7 @@
 
         .character {
             width: 300px;
-            height: 400px;
+            height: 600px;
             overflow: hidden;
             background-color: rgba(255, 255, 255, 0.8);
             border: 1px solid #ccc;
@@ -93,6 +93,8 @@
         .character img {
             width: 100%;
             border-radius: 5px;
+            height: auto;
+            max-height: 450px; /* Altura máxima para que la imagen no desborde el cuadro */
         }
 
         .character h2 {
@@ -106,6 +108,7 @@
             font-family: 'Pirata One', cursive;
             font-size: 16px;
             color: #666;
+            margin: 5px 0;
         }
 
         .battle-button {

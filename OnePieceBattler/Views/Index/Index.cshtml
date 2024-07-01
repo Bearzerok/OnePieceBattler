@@ -10,6 +10,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewData["Title"]</title>
+    <link rel="icon" type="image/png", sizes="16x16, href="~/favicon.ico" />
     <!-- Incluir la fuente externa de Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Pirata+One&display=swap" rel="stylesheet">
     <style>
@@ -97,7 +98,9 @@
 
         .character img {
             width: 100%;
+            height: auto;
             border-radius: 5px;
+            max-height: 450px; /* Altura máxima para que la imagen no desborde el cuadro */
         }
 
         .character h2 {

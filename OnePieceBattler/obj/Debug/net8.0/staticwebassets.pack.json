@@ -25,6 +25,10 @@
       "PackagePath": "staticwebassets/images/characters/luffy.png"
     },
     {
+      "Id": "/Users/javiermartinez/Desktop/Proyectos/OnePieceBattler/OnePieceBattler/wwwroot/images/characters/luffy_gear_5.png",
+      "PackagePath": "staticwebassets/images/characters/luffy_gear_5.png"
+    },
+    {
       "Id": "/Users/javiermartinez/Desktop/Proyectos/OnePieceBattler/OnePieceBattler/wwwroot/images/characters/marco_hybrid.png",
       "PackagePath": "staticwebassets/images/characters/marco_hybrid.png"
     },

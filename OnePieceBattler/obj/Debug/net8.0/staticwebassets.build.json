@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "sH3NcLoOaiTqPgYedBAwYo27khQmFtb+rOvg4WehjLs=",
+  "Hash": "vkGvWbyH4qlnwS/S0cJVsUbcRmo5rF+E3hb79HM+9+w=",
   "Source": "OnePieceBattler",
   "BasePath": "_content/OnePieceBattler",
   "Mode": "Default",
@@ -1269,6 +1269,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/images/characters/doflamingo.png"
+    },
+    {
+      "Identity": "/Users/javiermartinez/Desktop/Proyectos/OnePieceBattler/OnePieceBattler/wwwroot/images/characters/luffy_gear_5.png",
+      "SourceId": "OnePieceBattler",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/javiermartinez/Desktop/Proyectos/OnePieceBattler/OnePieceBattler/wwwroot/",
+      "BasePath": "_content/OnePieceBattler",
+      "RelativePath": "images/characters/luffy_gear_5.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/images/characters/luffy_gear_5.png"
     },
     {
       "Identity": "/Users/javiermartinez/Desktop/Proyectos/OnePieceBattler/OnePieceBattler/wwwroot/images/characters/luffy.png",

@@ -63,9 +63,11 @@ namespace OnePieceBattler.Data
                 new Character { Id = 3,Name = "Marco", Description= "Marco the Phoenix, Hybrid From",ImagePath= "/images/characters/marco_hybrid.png", Health = 100, AttackPower = 20, DefensePower = 10},
                 new Character {Id = 4,Name = "Gol D. Roger", Description = "Gol D. Roger, The Pirate King", ImagePath = "/images/characters/roger.png", Health = 200, DefensePower= 10},
                 new Character {Id = 5,Name = "Donquixote Doflaming", Description= "Heavenly Yaksha",ImagePath= "/images/characters/doflamingo.png", Health = 100, AttackPower = 20, DefensePower = 10},
-                new Character {Id = 6,Name = "Marco", Description = "Marco the Phoenix, Zoan Form", ImagePath = "/images/characters/marco_zoan.png", Health = 200, DefensePower= 10}
+                new Character {Id = 6,Name = "Marco", Description = "Marco the Phoenix, Zoan Form", ImagePath = "/images/characters/marco_zoan.png", Health = 200, DefensePower= 10},
+                new Character {Id = 7, Name = "Luffy", Description = "Monkey D. Luffy", ImagePath = "/images/characters/luffy_gear_5.png", Health = 500, AttackPower = 20, DefensePower = 10, Experience = 0, ExperienceToNextLevel = 100, Level = 1, ExperienceToNextLevelBase = 100, Speed = 10, Luck = 10}
             );
             modelBuilder.Entity<Move>().HasData(
+                new Move { Id = 3, Name = "Kick", MovePower = 100 }, // Id 0 is reserved for "No Move" or "No Action
                 new Move { Id= 1, Name= "Punch", MovePower= 10},
                 new Move { Id = 2,Name= "Slash", MovePower= 20}
             );

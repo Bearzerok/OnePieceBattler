@@ -23,8 +23,9 @@ namespace OnePieceBattler
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-
-            // Configura el DbContext con el proveedor de base de datos (por ejemplo, SQL Server)
+            
+            
+            // Configura el DbContext con el proveedor de base de datos (por ejemplo, SQLite)
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlite(
                     Configuration.GetConnectionString("DefaultConnection")));
